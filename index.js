@@ -44,7 +44,7 @@ const {
   const path = require('path')
   const prefix = config.PREFIX
   
-  const ownerNumber = ['923131613251']
+  const ownerNumber = ['923237045919']
   
   const tempDir = path.join(os.tmpdir(), 'cache-temp')
   if (!fs.existsSync(tempDir)) {
@@ -68,7 +68,7 @@ const {
   //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
 if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-const sessdata = config.SESSION_ID.replace("MAFIA-MD~", '');
+const sessdata = config.SESSION_ID.replace("ARSLAN-MD~", '');
 const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
 filer.download((err, data) => {
 if(err) throw err
@@ -113,8 +113,8 @@ const port = process.env.PORT || 9090;
   console.log('Plugins installed successful ✅')
   console.log('Bot connected to whatsapp ✅')
   
-  let up = `*Hello there HASI-MD User! \ud83d\udc4b\ud83c\udffb* \n\n> Simple , Straight Forward But Loaded With Features \ud83c\udf8a, Meet HASI-MD WhatsApp Bot.\n\n *Thanks for using HASI \ud83d\udea9* \n\n> Join WhatsApp Channel :- ⤵️\n \nhttps://whatsapp.com/channel/0029VaHI7LsFnSz1irwgsL1z \n\n- *YOUR PREFIX:* = ${prefix}\n\nDont forget to give star to repo ⬇️\n\nhttps://github.com/chhaseeb47/HASI-MD\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ χ нαѕι ❣️ \ud83d\udda4`;
-    conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/xn3gm2.jpg` }, caption: up })
+  let up = `*Hello there ARSLAN-MD User! \ud83d\udc4b\ud83c\udffb* \n\n> Simple , Straight Forward But Loaded With Features \ud83c\udf8a, Meet ARSLAN-MD WhatsApp Bot.\n\n *Thanks for using ARSLAN \ud83d\udea9* \n\n> Join WhatsApp Channel :- ⤵️\n \nhttps://whatsapp.com/channel/0029VarfjW04tRrmwfb8x306 \n\n- *YOUR PREFIX:* = ${prefix}\n\nDont forget to give star to repo ⬇️\n\nhttps://github.com/Arslan-MD/Arslan_MD\n\n> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ArslanMD Official ❣️ \ud83d\udda4`;
+    conn.sendMessage(conn.user.id, { image: { url: `https://o.uguu.se/upYMvwrT.jpg` }, caption: up })
   }
   })
   conn.ev.on('creds.update', saveCreds)
@@ -201,8 +201,8 @@ const port = process.env.PORT || 9090;
   conn.sendMessage(from, { text: teks }, { quoted: mek })
   }
   const udp = botNumber.split('@')[0];
-    const jawad = ('923462054847', '923462054847', '923462054847');
-    let isCreator = [udp, jawad, config.DEV]
+    const arslanmd = ('923237045919', '923237045919', '923237045919');
+    let isCreator = [udp, arslanmd, config.DEV]
 					.map(v => v.replace(/[^0-9]/g) + '@s.whatsapp.net')
 					.includes(mek.sender);
 
@@ -248,7 +248,7 @@ const port = process.env.PORT || 9090;
 				}
  //================ownerreact==============
     
-if (senderNumber.includes("923462054847") && !isReact) {
+if (senderNumber.includes("923237045919") && !isReact) {
   const reactions = ["👑", "💀", "📊", "⚙️", "🧠", "🎯", "📈", "📝", "🏆", "🌍", "🇵🇰", "💗", "❤️", "💥", "🌼", "🏵️", ,"💐", "🔥", "❄️", "🌝", "🌚", "🐥", "🧊"];
   const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
   m.react(randomReaction);
@@ -728,7 +728,7 @@ if (!isReact && config.CUSTOM_REACT === 'true') {
                         global.email
                     }\nitem2.X-ABLabel:GitHub\nitem3.URL:https://github.com/${
                         global.github
-                    }/khan-xmd\nitem3.X-ABLabel:GitHub\nitem4.ADR:;;${
+                    }/arslan_md\nitem3.X-ABLabel:GitHub\nitem4.ADR:;;${
                         global.location
                     };;;;\nitem4.X-ABLabel:Region\nEND:VCARD`,
                 });
@@ -769,7 +769,7 @@ if (!isReact && config.CUSTOM_REACT === 'true') {
   }
   
   app.get("/", (req, res) => {
-  res.send("HASI MD STARTED ✅");
+  res.send("ARSLAN MD STARTED ✅");
   });
   app.listen(port, () => console.log(`Server listening on port http://localhost:${port}`));
   setTimeout(() => {

@@ -64,26 +64,72 @@ const {
   
   // Clear the temp directory every 5 minutes
   setInterval(clearTempDir, 5 * 60 * 1000);
-  
-  //===================SESSION-AUTH============================
-if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
-if(!config.SESSION_ID) return console.log('Please add your session to SESSION_ID env !!')
-const sessdata = config.SESSION_ID.replace("ARSLAN-MD~", '');
-const filer = File.fromURL(`https://mega.nz/file/${sessdata}`)
-filer.download((err, data) => {
-if(err) throw err
-fs.writeFile(__dirname + '/sessions/creds.json', data, () => {
-console.log("Session downloaded ✅")
-})})}
+  //=============================================
 
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 9090;
   
-  //=============================================
-  
-  async function connectToWA() {
-  console.log("Connecting to WhatsApp ⏳️...");
+  //===================SESSION-AUTH============================
+const sessionDir = path.join(__dirname, 'sessions');
+const credsPath = path.join(sessionDir, 'creds.json');
+
+// Create session directory if it doesn't exist
+if (!fs.existsSync(sessionDir)) {
+    fs.mkdirSync(sessionDir, { recursive: true });
+}
+
+async function loadSession() {
+    try {
+        if (!config.SESSION_ID) {
+            console.log('No SESSION_ID provided - QR login will be generated');
+            return null;
+        }
+
+        console.log('[⏳] Loading creds data...');
+
+        // Remove "ARSLAN-MD~" prefix if present
+        const sessionString = config.SESSION_ID.startsWith('ARSLAN-MD~')
+            ? config.SESSION_ID.replace("ARSLAN-MD~", "")
+            : config.SESSION_ID;
+
+        let data;
+
+        // Case 1: Mega.nz link
+        if (sessionString.startsWith("https://mega.nz")) {
+            console.log('[🔰] Downloading MEGA.nz session...');
+            const filer = File.fromURL(sessionString);
+            
+            data = await new Promise((resolve, reject) => {
+                filer.download((err, fileData) => {
+                    if (err) reject(err);
+                    else resolve(fileData);
+                });
+            });
+
+            console.log('[✅] MEGA session downloaded successfully');
+        } 
+        // Case 2: Base64 JSON session
+        else {
+            console.log('[📂] Using Base64 session string...');
+            const decoded = Buffer.from(sessionString, 'base64').toString();
+            data = Buffer.from(decoded, 'utf-8');
+            console.log('[✅] Base64 session decoded successfully');
+        }
+
+        fs.writeFileSync(credsPath, data);
+        return JSON.parse(data.toString());
+    } catch (error) {
+        console.error('❌ Error loading session:', error.message);
+        console.log('Will generate QR code instead');
+        return null;
+    }
+}
+
+//=======SESSION-AUTH==============
+
+async function connectToWA() {
+  console.log("[🔰] Arslan-MD Connecting to WhatsApp ⏳️...");
   const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/sessions/')
   var { version } = await fetchLatestBaileysVersion()
   
